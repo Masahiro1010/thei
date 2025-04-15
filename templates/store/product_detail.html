@@ -1,0 +1,52 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}{{ product.name }} | the.i{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+    <div class="row align-items-start">
+        <!-- 左：画像（約58%） -->
+        <div class="col-md-7 mb-4 mb-md-0">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" class="img-fluid rounded shadow w-100" alt="{{ product.name }}">
+            {% else %}
+                <div class="bg-light" style="width: 100%; aspect-ratio: 1/1;"></div>
+            {% endif %}
+        </div>
+
+        <!-- 右：情報（約42%） -->
+        <!-- 右：情報 -->
+<div class="col-md-5">
+    <h2 class="fw-bold mb-4" style="letter-spacing: 0.05em; font-size: 1.75rem;">
+        {{ product.name }}
+    </h2>
+
+    {% if product.price %}
+        <p class="mb-4 fw-semibold" style="font-size: 1.2rem; letter-spacing: 0.03em;">
+            ¥{{ product.price }}
+        </p>
+    {% else %}
+        <p class="text-secondary small mb-4" style="letter-spacing: 0.05em;">
+            SOLD OUT
+        </p>
+    {% endif %}
+
+    <div class="border-top my-4" style="border-color: #ccc;"></div>
+
+    <p class="text-muted" style="line-height: 1.9; letter-spacing: 0.03em; font-size: 0.95rem;">
+        {{ product.description }}
+    </p>
+
+    <!-- 線 -->
+    <div class="border-top my-4" style="border-color: #ccc;"></div>
+
+    
+
+    <a href="#" class="btn btn-outline-dark w-100 py-2 rounded-0 disabled" style="letter-spacing: 0.08em;">
+        購入機能は後日実装
+    </a>
+</div>
+    </div>
+</section>
+{% endblock %}

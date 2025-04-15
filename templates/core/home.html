@@ -1,0 +1,110 @@
+<!-- templates/home.html -->
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Home | the.i{% endblock %}
+
+{% block content %}
+
+    <!-- メインビジュアル -->
+    <section class="position-relative">
+        <img src="{% static 'img/mainvisual.jpg' %}" class="img-fluid w-100" style="max-height: 90vh; object-fit: cover;" alt="Main Visual">
+        <h2 class="position-absolute top-50 start-50 translate-middle text-white display-4 fw-bold">
+            REMADE TO BE YOU.
+        </h2>
+    </section>
+
+    <!-- conceptセクション -->
+    <section class="container py-5" id="concept">
+        <!-- 見出し（中央＆強調） -->
+        <div class="text-center mb-5">
+            <p class="fw-bold fs-2 text-dark mb-1" style="letter-spacing: 0.15em;">
+                CONCEPT
+            </p>
+            <p class="text-muted fs-6" style="letter-spacing: 0.05em;">
+                コンセプト
+            </p>
+        </div>
+    
+        <div class="row align-items-center">
+            <!-- 左：テキスト -->
+            <div class="col-md-6 mb-4 mb-md-0">
+                <h2 class="fw-bold mb-3">the.i（自愛）自分を愛せるように、</h2>
+                <p class="text-muted" style="line-height: 2;">
+                    「the.i」のthe「i」はある共通のものを指します。<br>
+                    製作者と消費者を個でつなげるかけ合わせの<br>
+                    かかわりの中で自愛のごとく自分(identity)を愛するきっかけを作っていきます。
+                </p>
+            </div>
+    
+            <!-- 右：画像 -->
+            <div class="col-md-6 text-center">
+                <img src="{% static 'img/concept.jpg' %}" alt="concept visual" class="img-fluid rounded shadow" style="max-width: 100%; height: auto;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Productsセクション -->
+    <section class="container py-5" id="products">
+        <div class="text-center mb-5">
+            <p class="fw-bold fs-2 text-dark mb-1" style="letter-spacing: 0.15em;">
+                SHOP
+            </p>
+            <p class="text-muted fs-6" style="letter-spacing: 0.05em;">
+                商品一覧
+            </p>
+        </div>
+    
+        <div class="row row-cols-2 row-cols-md-4 g-4">
+            {% for product in products %}
+                {% if product.pk %}
+                <div class="col text-center">
+                    <a href="{% url 'product_detail' product.pk %}" class="text-decoration-none text-dark">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" class="img-fluid" style="max-width: 180px; height: auto;" alt="{{ product.name }}">
+                        {% else %}
+                            <div class="bg-light" style="aspect-ratio: 1/1; max-width: 180px; margin: 0 auto;"></div>
+                        {% endif %}
+                        <p class="mt-2 mb-0 fw-medium">{{ product.name }}</p>
+                        {% if product.price %}
+                            <p class="text-muted small">¥{{ product.price }}</p>
+                        {% else %}
+                            <p class="text-muted small text-danger">SOLD OUT</p>
+                        {% endif %}
+                    </a>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ABOUTセクション -->
+    <section class="container py-5" id="about">
+        <!-- 見出し -->
+        <div class="text-center mb-5">
+            <p class="fw-bold fs-2 text-dark mb-1" style="letter-spacing: 0.15em;">
+                ABOUT
+            </p>
+            <p class="text-muted fs-6" style="letter-spacing: 0.05em;">
+                私たちについて
+            </p>
+        </div>
+    
+        <div class="row align-items-center">
+            <!-- 左：画像 -->
+            <div class="col-md-6 text-center mb-4 mb-md-0">
+                <img src="{% static 'img/shopicon.jpg' %}" class="img-fluid rounded shadow" alt="About the.i" style="max-width: 250px;">
+            </div>
+    
+            <!-- 右：テキスト -->
+            <div class="col-md-6">
+                <p class="text-muted" style="line-height: 2;">
+                    the.i（ジアイ）は、リメイクパンツを中心に展開するアパレルブランドです。<br>
+                    個性を大切にするすべての人に、自分を愛するきっかけとなる服を届けます。<br>
+                    製作者と着る人が繋がることで生まれる唯一無二の「i」を、the.iは大切にしています。
+                </p>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
