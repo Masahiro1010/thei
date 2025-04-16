@@ -20,7 +20,6 @@ Jiai/  # ← 仮想環境を Jiai という名前で作ってるならこれも�
 # Django
 db.sqlite3
 media/
-staticfiles/
 
 # migrations（必要なら）
 */migrations/__pycache__/
