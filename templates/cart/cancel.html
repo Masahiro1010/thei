@@ -2,9 +2,11 @@
 {% block title %}購入キャンセル | the.i{% endblock %}
 
 {% block content %}
-<section class="container py-5 text-center">
-    <h2 class="mb-4 fw-bold">購入がキャンセルされました</h2>
-    <p class="mb-4">もう一度購入手続きを行うには、カートからやり直してください。</p>
-    <a href="{% url 'cart_detail' %}" class="btn btn-outline-dark">カートに戻る</a>
-</section>
+    <section class="container py-5 px-3 text-center">
+        <div class="mx-auto" style="max-width: 500px;">
+            <h2 class="mb-4 fw-bold">購入がキャンセルされました</h2>
+            <p class="mb-4">もう一度購入手続きを行うには、カートからやり直してください。</p>
+            <a href="{% url 'cart_detail' %}" class="btn btn-outline-dark px-4 py-2">カートに戻る</a>
+        </div>
+    </section>
 {% endblock %}

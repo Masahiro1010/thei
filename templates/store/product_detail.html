@@ -40,12 +40,12 @@
 
     <!-- 線 -->
     <div class="border-top my-4" style="border-color: #ccc;"></div>
-
     
-
+    <!--
     <a href="#" class="btn btn-outline-dark w-100 py-2 rounded-0 disabled mb-4" style="letter-spacing: 0.08em;">
         購入機能は後日実装
     </a>
+    -->
     {% if product.price %}
     <form method="post" action="{% url 'add_to_cart' product.pk %}">
         {% csrf_token %}

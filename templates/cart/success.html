@@ -2,9 +2,14 @@
 {% block title %}購入完了 | the.i{% endblock %}
 
 {% block content %}
-<section class="container py-5 text-center">
-    <h2 class="mb-4 fw-bold">🎉 ご購入ありがとうございました！</h2>
-    <p class="mb-4">ご注文が正常に完了しました。<br>発送までしばらくお待ちください。</p>
-    <a href="{% url 'home' %}" class="btn btn-outline-dark">ホームに戻る</a>
-</section>
+    <section class="container py-5 px-3 text-center">
+        <div class="mx-auto" style="max-width: 500px;">
+            <h2 class="mb-4 fw-bold">🎉 ご購入ありがとうございました！</h2>
+            <p class="mb-4">
+                ご注文が正常に完了しました。<br>
+                発送までしばらくお待ちください。
+            </p>
+            <a href="{% url 'home' %}" class="btn btn-outline-dark px-4 py-2">ホームに戻る</a>
+        </div>
+    </section>
 {% endblock %}
