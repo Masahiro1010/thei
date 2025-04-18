@@ -1,49 +1,82 @@
 {% extends "core/base.html" %}
+{% load static %}
 {% block title %}カート | the.i{% endblock %}
 
 {% block content %}
-    <section class="container py-5">
-        <h2 class="fw-bold mb-4">ショッピングカート</h2>
+<section class="container py-5">
+    <h2 class="fw-bold mb-4">ショッピングカート</h2>
 
-        {% if cart_items %}
-            <div class="table-responsive">
-                <table class="table align-middle text-center">
-                    <thead class="table-light">
+    {% if cart_items %}
+        <div class="table-responsive">
+            <table class="table align-middle text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">商品</th>
+                        <th scope="col">価格</th>
+                        <th scope="col">数量</th>
+                        <th scope="col">小計</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
                         <tr>
-                            <th scope="col">商品</th>
-                            <th scope="col">価格</th>
-                            <th scope="col">数量</th>
-                            <th scope="col">小計</th>
-                            <th scope="col"></th>
+                            <td class="text-start">
+                                <img src="{{ item.product.image.url }}" class="img-thumbnail d-block mx-auto" style="max-width: 80px; height: auto;">
+                                <p class="mt-2 mb-0 text-center small">{{ item.product.name }}</p>
+                            </td>
+                            <td class="text-nowrap">¥{{ item.product.price }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td class="text-nowrap">¥{{ item.subtotal }}</td>
+                            <td>
+                                <form method="post" action="{% url 'remove_from_cart' item.product.pk %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">削除</button>
+                                </form>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in cart_items %}
-                            <tr>
-                                <td class="text-start">
-                                    <img src="{{ item.product.image.url }}" class="img-thumbnail d-block mx-auto" style="max-width: 80px; height: auto;">
-                                    <p class="mt-2 mb-0 text-center small">{{ item.product.name }}</p>
-                                </td>
-                                <td class="text-nowrap">¥{{ item.product.price }}</td>
-                                <td>{{ item.quantity }}</td>
-                                <td class="text-nowrap">¥{{ item.subtotal }}</td>
-                                <td>
-                                    <form method="post" action="{% url 'remove_from_cart' item.product.pk %}">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">削除</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-            <div class="text-end mt-4">
-                <h4>合計: ¥{{ total_price }}</h4>
-            </div>
-        {% else %}
-            <p>カートに商品がありません。</p>
-        {% endif %}
-    </section>
+        <div class="text-end mt-4">
+            <h4>合計: ¥{{ total_price }}</h4>
+        </div>
+
+        <!-- Stripeの購入ボタン -->
+        <div class="text-end mt-4">
+            <form id="checkout-form">
+                <input type="hidden" id="stripe-public-key" value="{{ stripe_public_key }}">
+                <button type="submit" class="btn btn-dark px-4 py-2">購入する</button>
+            </form>
+        </div>
+    {% else %}
+        <p>カートに商品がありません。</p>
+    {% endif %}
+</section>
+
+<!-- Stripe JS -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    document.getElementById('checkout-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const stripePublicKey = document.getElementById('stripe-public-key').value;
+        const stripe = Stripe(stripePublicKey);
+
+        fetch("{% url 'create_checkout_session' %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+                "Content-Type": "application/json"
+            },
+        })
+        .then(response => response.json())
+        .then(session => {
+            return stripe.redirectToCheckout({ sessionId: session.id });
+        })
+        .catch(error => console.error("Error:", error));
+    });
+</script>
 {% endblock %}
