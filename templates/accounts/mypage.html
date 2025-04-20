@@ -1,0 +1,35 @@
+{% extends "core/base.html" %}
+{% load widget_tweaks %}
+{% block title %}マイページ | the.i{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+    <h2 class="fw-bold mb-4">マイページ</h2>
+
+    <form method="post" class="card p-4">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label"><strong>ユーザー名：</strong></label>
+            <p class="form-control-plaintext">{{ user.email }}</p>
+        </div>
+
+        <div class="mb-3">
+            <label for="id_postal_code" class="form-label"><strong>郵便番号：</strong></label>
+            {{ form.postal_code|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_address" class="form-label"><strong>住所：</strong></label>
+            {{ form.address|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_phone_number" class="form-label"><strong>電話番号：</strong></label>
+            {{ form.phone_number|add_class:"form-control" }}
+        </div>
+
+        <button type="submit" class="btn btn-dark mt-3">保存</button>
+    </form>
+</section>
+{% endblock %}

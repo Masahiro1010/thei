@@ -1,0 +1,22 @@
+{% extends "core/base.html" %}
+{% block title %}ログイン | the.i{% endblock %}
+
+{% block content %}
+    <section class="container py-5 px-3">
+        <div class="mx-auto" style="max-width: 400px;">
+            <h2 class="fw-bold mb-4 text-center">ログイン</h2>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-dark btn-lg w-100">ログイン</button>
+                </div>
+            </form>
+
+            <div class="text-center mt-3">
+                <p>アカウントをお持ちでない方は <a href="{% url 'signup' %}">新規登録</a></p>
+            </div>
+        </div>
+    </section>
+{% endblock %}

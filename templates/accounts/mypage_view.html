@@ -1,0 +1,23 @@
+{% extends "core/base.html" %}
+{% block title %}マイページ確認 | the.i{% endblock %}
+
+{% block content %}
+    <section class="container py-5 px-3">
+        <div class="mx-auto" style="max-width: 600px;">
+            <h2 class="fw-bold mb-4 text-center">マイページ</h2>
+
+            <div class="card p-4 mb-4 shadow-sm rounded-3">
+                <p class="mb-2"><strong>メールアドレス：</strong> {{ user.email }}</p>
+                <p class="mb-2"><strong>郵便番号：</strong> {{ user.postal_code }}</p>
+                <p class="mb-2"><strong>住所：</strong> {{ user.address }}</p>
+                <p class="mb-2"><strong>電話番号：</strong> {{ user.phone_number }}</p>
+            </div>
+
+            <div class="text-center">
+                <a href="{% url 'mypage' %}" class="btn btn-outline-dark btn-lg w-100 w-md-auto">
+                    編集する
+                </a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

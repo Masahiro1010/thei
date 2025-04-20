@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     "core",
     'cloudinary',
     'cloudinary_storage',
+    'accounts',
+    'cart',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -160,3 +163,10 @@ cloudinary.config(
     api_key = config('CLOUDINARY_API_KEY'), 
     api_secret = config('CLOUDINARY_API_SECRET')
 )
+
+LOGIN_REDIRECT_URL = '/accounts/mypage/'
+
+LOGOUT_REDIRECT_URL = '/'
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
+

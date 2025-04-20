@@ -26,6 +26,7 @@ urlpatterns = [
     path('', core_views.HomeView.as_view(), name='home'),
     path('products/', include('store.urls')),
     path('cart/', include('cart.urls')),
+    path('accounts/', include('accounts.urls')),
 ]
 
 if settings.DEBUG:
