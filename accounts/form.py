@@ -29,3 +29,6 @@ class CustomUserChangeForm(forms.ModelForm):
             'postal_code': '郵便番号',
             'phone_number': '電話番号',
         }
+
+class VerificationForm(forms.Form):
+    code = forms.CharField(label='確認コード', max_length=6)

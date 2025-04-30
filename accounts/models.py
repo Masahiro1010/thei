@@ -1,5 +1,8 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+import uuid
+from django.utils import timezone
+from datetime import timedelta
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -19,9 +22,12 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     # 基本情報
     email = models.EmailField(unique=True)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
+
+    verification_code = models.CharField(max_length=6, blank=True)
+    verification_expiry = models.DateTimeField(null=True, blank=True)
 
     # プロフィール情報
     address = models.CharField("住所", max_length=255, blank=True)
