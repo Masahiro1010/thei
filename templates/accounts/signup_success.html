@@ -1,0 +1,17 @@
+{% extends "core/base.html" %}
+{% block title %}登録完了 | the.i{% endblock %}
+
+{% block content %}
+    <section class="container py-5 px-3">
+        <div class="mx-auto" style="max-width: 400px;">
+            <h2 class="fw-bold mb-4 text-center">🎉 登録が完了しました！</h2>
+            <p class="mb-4 text-center">
+                アカウントの登録が正常に完了しました。<br>
+                引き続き the.i をお楽しみください。
+            </p>
+            <div class="d-grid">
+                <a href="{% url 'home' %}" class="btn btn-dark btn-lg w-100">ホームに戻る</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -20,6 +20,19 @@ class CustomUserCreationForm(UserCreationForm):
         model = CustomUser
         fields = ('email',)
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        try:
+            user = CustomUser.objects.get(email=email)
+            if not user.is_active:
+                # 仮登録状態なら削除して再登録を許可
+                user.delete()
+            else:
+                raise forms.ValidationError("このメールアドレスはすでに登録されています。")
+        except CustomUser.DoesNotExist:
+            pass
+        return email
+
 class CustomUserChangeForm(forms.ModelForm):
     class Meta:
         model = CustomUser

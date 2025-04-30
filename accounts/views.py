@@ -36,10 +36,15 @@ class SignUpView(CreateView):
     success_url = reverse_lazy('verify_email')
 
     def form_valid(self, form):
+        email = form.cleaned_data.get("email")
+
+        # 🔁 既存の仮登録ユーザーがいれば削除
+        CustomUser.objects.filter(email=email, is_active=False).delete()
+
         user = form.save(commit=False)
         user.is_active = False
-        user.verification_code = str(random.randint(100000, 999999))  # ← 6桁のコード生成
-        user.verification_expiry = timezone.now() + timedelta(minutes=1)
+        user.verification_code = str(random.randint(100000, 999999))
+        user.verification_expiry = timezone.now() + timedelta(minutes=30)
         user.save()
 
         send_verification_email(user)
@@ -55,7 +60,7 @@ class CustomLogoutView(View):
 class VerifyEmailView(FormView):
     template_name = 'accounts/verify_email.html'
     form_class = VerificationForm
-    success_url = reverse_lazy('login')  # 認証成功後はログイン画面へ
+    success_url = reverse_lazy('signup_success')  # 認証成功後はログイン画面へ
 
     def form_valid(self, form):
         code = form.cleaned_data['code']
@@ -74,6 +79,9 @@ class VerifyEmailView(FormView):
         except CustomUser.DoesNotExist:
             form.add_error('code', '確認コードが正しくありません。')
             return self.form_invalid(form)
+        
+class SignUpSuccessView(TemplateView):
+    template_name = 'accounts/signup_success.html'
     
 
 
